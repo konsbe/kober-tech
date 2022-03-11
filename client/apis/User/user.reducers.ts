@@ -4,8 +4,27 @@ const INITIAL_STATE = {
   currentUser: null,
   user: null,
 };
+interface IGoogleUserProps {
+  email: string;
+  familyName: string;
+  givenName: string;
+  googleId: string;
+  imageUrl: string;
+  name: string;
+}
 
-const userReducer = (state = INITIAL_STATE, action) => {
+interface IPropData {
+  result: IGoogleUserProps;
+  token: string;
+}
+interface Action {
+  payload: IPropData;
+  type: "AUTH" | "SET_USER" | "CREATE_USER" | "LOG_IN_USER" | "LOG_OUT_USER";
+  data: IPropData;
+}
+
+const userReducer = (state = INITIAL_STATE, action: Action) => {
+  console.log(action, "this is the action");
   switch (action.type) {
     case "AUTH":
       localStorage.setItem("userProfile", JSON.stringify({ ...action?.data }));

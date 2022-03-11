@@ -13,21 +13,21 @@ import { IUserTypes } from "./user.types";
 //   }
 // };
 
-export const setUserAction =
-  (formData: any) => async (dispatch: React.Dispatch<any>) => {
-    try {
-      console.log({ ...formData }, "actions-formData");
-      console.log(JSON.parse(localStorage.getItem("userProfile")), "actions");
-      dispatch({ type: "SET_USER", payload: { ...formData } });
-      console.log(
-        JSON.parse(localStorage.getItem("userProfile")).token,
-        "actions"
-      );
-      console.log(formData, "actions");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+// export const setUserAction =
+//   (formData: any) => async (dispatch: React.Dispatch<any>) => {
+//     try {
+//       console.log({ ...formData }, "actions-formData");
+//       console.log(JSON.parse(localStorage.getItem("userProfile")), "actions");
+//       dispatch({ type: "SET_USER", payload: { ...formData } });
+//       console.log(
+//         JSON.parse(localStorage.getItem("userProfile")).token,
+//         "actions"
+//       );
+//       console.log(formData, "actions");
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
 
 // export const logInAction = (formData, router) => async (dispatch) => {
 //   try {

@@ -17,21 +17,32 @@ import { ResultOptions } from "react-query";
 const initialState = {
   email: "",
   password: "",
-  token: "",
 };
+
+interface IGoogleUserProps {
+  email: string;
+  familyName: string;
+  givenName: string;
+  googleId: string;
+  imageUrl: string;
+  name: string;
+}
 
 function LoginForm(): JSX.Element {
   const router = useRouter();
   const classes = useStyles();
   const [data, setData] = useState<any>();
   const [formData, setFormData] = useState(initialState);
-  const [state, dispatch] = useReducer(userReducer, data);
+  const [INITIAL_STATE, dispatch] = useReducer(userReducer, data);
   const googleSuccess = async (res: any) => {
-    const result = res?.profileObj;
-    const token = res?.tokenId;
+    const result: IGoogleUserProps = res?.profileObj;
+    const token: string = res?.tokenId;
     setData({ result, token });
     try {
       console.log("Success");
+      console.log(result, "IPROPDATA");
+      console.log(token, "IPROPDATA");
+
       // setFormData({...formData, token: token})
       dispatch({ type: "AUTH", data: { result, token } });
       //   .then(
