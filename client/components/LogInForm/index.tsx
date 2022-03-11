@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import ButtonForm from "../Form/ButtonForm";
 import InputForm from "../Form/InputForm";
 import { Box } from "@mui/material";
@@ -7,33 +7,35 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { GoogleLogin } from "react-google-login";
 import { Button } from "@mui/material";
 import useStyles from "./styles";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Icon from "./icon";
 import styles from "./../styles/Form.module.scss";
-
-import { logInAction } from "../../apis/User/user.actions";
+import userReducer from "../../apis/User/user.reducers";
+// import { logInAction } from "../../apis/User/user.actions";
 import { ResultOptions } from "react-query";
 
 const initialState = {
   email: "",
-
   password: "",
+  token: "",
 };
 
-function LoginForm() {
+function LoginForm(): JSX.Element {
   const router = useRouter();
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const [data, setData] = useState<any>();
   const [formData, setFormData] = useState(initialState);
-
+  const [state, dispatch] = useReducer(userReducer, data);
   const googleSuccess = async (res: any) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
+    setData({ result, token });
     try {
+      console.log("Success");
+      // setFormData({...formData, token: token})
       dispatch({ type: "AUTH", data: { result, token } });
       //   .then(
-      //   router.push("/")
+      router.push("/");
       // );
     } catch (error) {
       console.log(error);
@@ -51,7 +53,7 @@ function LoginForm() {
   const handleSubmit = (e: React.SyntheticEvent | React.FormEvent) => {
     e.preventDefault();
     console.log(formData, "login");
-    dispatch(logInAction(formData, router));
+    // dispatch(logInAction(formData, router));
   };
   return (
     <form onSubmit={handleSubmit} className={styles.signUpform}>
@@ -111,3 +113,4 @@ function LoginForm() {
 }
 
 export default LoginForm;
+const dispatch = (arg0: (dispatch: any) => Promise<void>) => {};
